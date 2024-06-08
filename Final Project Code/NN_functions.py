@@ -85,3 +85,26 @@ def create_model(nodes):
        model.compile(optimizer=optimizer, loss=["MSE"], metrics=["MAE", "MAPE"])
 
        return model
+
+def plot_model_history(history):
+    """Plot the training and validation history for a TensorFlow network"""
+
+    # Extract loss and accuracy
+    loss = history.history["loss"]
+    val_loss = history.history["val_loss"]
+    mape = history.history["MAPE"]
+    val_MAPE = history.history["val_MAPE"]
+    n_epochs = len(loss)
+
+    fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(10, 5))
+    ax[0].plot(np.arange(n_epochs), loss, label="Training")
+    ax[0].plot(np.arange(n_epochs), val_loss, label="Validation")
+    ax[0].legend()
+    ax[0].set_xlabel("Epoch")
+    ax[0].set_ylabel("Loss")
+
+    ax[1].plot(np.arange(n_epochs), mape, label="Training")
+    ax[1].plot(np.arange(n_epochs), val_MAPE, label="Validation")
+    ax[1].legend()
+    ax[1].set_xlabel("Epoch")
+    ax[1].set_ylabel("Mean Absolute Percent Error")
